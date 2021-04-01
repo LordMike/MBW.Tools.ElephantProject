@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29009.5
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9F511F81-8F99-4CDF-93AA-4555F7DF0A6E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{79558370-7DB3-410D-A202-53826D4A4A2C}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Imports", "_Imports", "{4E7AB767-DBD8-46D7-ABFA-06673687B892}"
+	ProjectSection(SolutionItems) = preProject
+		_Imports\Local.targets = _Imports\Local.targets
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MBW.Tools.ElephantProject", "src\MBW.Tools.ElephantProject\MBW.Tools.ElephantProject.csproj", "{61D00758-270B-4375-A604-B86160A73225}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{61D00758-270B-4375-A604-B86160A73225}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61D00758-270B-4375-A604-B86160A73225}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61D00758-270B-4375-A604-B86160A73225}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{61D00758-270B-4375-A604-B86160A73225}.Debug|x64.Build.0 = Debug|Any CPU
+		{61D00758-270B-4375-A604-B86160A73225}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{61D00758-270B-4375-A604-B86160A73225}.Debug|x86.Build.0 = Debug|Any CPU
+		{61D00758-270B-4375-A604-B86160A73225}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61D00758-270B-4375-A604-B86160A73225}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61D00758-270B-4375-A604-B86160A73225}.Release|x64.ActiveCfg = Release|Any CPU
+		{61D00758-270B-4375-A604-B86160A73225}.Release|x64.Build.0 = Release|Any CPU
+		{61D00758-270B-4375-A604-B86160A73225}.Release|x86.ActiveCfg = Release|Any CPU
+		{61D00758-270B-4375-A604-B86160A73225}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4E7AB767-DBD8-46D7-ABFA-06673687B892} = {79558370-7DB3-410D-A202-53826D4A4A2C}
+		{61D00758-270B-4375-A604-B86160A73225} = {9F511F81-8F99-4CDF-93AA-4555F7DF0A6E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {11A7E58C-74A7-4198-B64E-F0DA60AAE3C0}
+	EndGlobalSection
+EndGlobal
