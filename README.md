@@ -13,6 +13,12 @@ Run `dotnet tool install -g MBW.Tools.ElephantProject`. After this, `elephant-pr
 
 Run `elephant-project --help` to get further details.
 
+## Usage: Rewrite project files
+
+> elephant-project rewrite -d C:\Root\Directory\
+
+This command replaces `PackageReferences` in `csproj` files with `ProjectReferences`. The goal here is to enable compilation, linking and debugging between two (or more) distinct repositories that usually share code through nuget packages.
+
 ## Usage: Create combined solution file
 
 > elephant-project sln -d C:\Root\Directory\ Full.sln
@@ -21,8 +27,6 @@ This command creates or modifies a solution file to contain the projects within 
 
 Dependent projects are _always_ included in the resulting solution file - even if they are outside the root directory.
 
-## Usage: Rewrite project files
+# Tips
 
-> elephant-project rewrite -d C:\Root\Directory\
-
-This command replaces `PackageReferences` in `csproj` files with `ProjectReferences`. The goal here is to enable compilation, linking and debugging between two (or more) distinct repositories that usually share code through nuget packages. 
+Use `rewrite` first on the directory containing all your repositories. This replaces all nuget references with project references, between all repositories. Then use `sln` to create a new solution file that encompasses all projects in one go. Opening this solution file should now present you with all your projects in one common place.
