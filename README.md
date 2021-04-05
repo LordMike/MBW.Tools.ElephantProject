@@ -19,6 +19,8 @@ Run `elephant-project --help` to get further details.
 
 This command replaces `PackageReferences` in `csproj` files with `ProjectReferences`. The goal here is to enable compilation, linking and debugging between two (or more) distinct repositories that usually share code through nuget packages.
 
+You can reverse the changes made during `rewrite`, by running `undo-rewrite` with the exact same arguments.
+
 ## Usage: Create combined solution file
 
 > elephant-project sln -d C:\Root\Directory\ Full.sln
