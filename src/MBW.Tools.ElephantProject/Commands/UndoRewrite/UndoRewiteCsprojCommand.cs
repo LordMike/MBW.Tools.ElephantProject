@@ -20,7 +20,7 @@ namespace MBW.Tools.ElephantProject.Commands.UndoRewrite
             _projectStore = projectStore;
         }
 
-        public override async Task<int> Execute()
+        public override Task<int> Execute()
         {
             List<FileInfo> matchedProjects = ProjectUtility.GetAllMatchedProjects(_options.RootDir, new[] { ".csproj" }, _options.Include, _options.Exclude).ToList();
 
@@ -44,7 +44,7 @@ namespace MBW.Tools.ElephantProject.Commands.UndoRewrite
                 project.Save();
             }
 
-            return 0;
+            return Task.FromResult(0);
         }
     }
 }

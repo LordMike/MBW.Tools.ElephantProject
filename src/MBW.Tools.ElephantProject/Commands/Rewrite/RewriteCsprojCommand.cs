@@ -24,7 +24,7 @@ namespace MBW.Tools.ElephantProject.Commands.Rewrite
         private string GetAssemblyName(FileInfo projectFile)
         {
             Project project = _projectStore.Load(projectFile);
-            
+
             string id = project.GetPropertyValue("PackageId");
             if (string.IsNullOrEmpty(id))
                 id = project.GetPropertyValue("AssemblyName");
@@ -68,7 +68,7 @@ namespace MBW.Tools.ElephantProject.Commands.Rewrite
             return lookup;
         }
 
-        public override async Task<int> Execute()
+        public override Task<int> Execute()
         {
             List<FileInfo> matchedProjects = ProjectUtility.GetAllMatchedProjects(_options.RootDir, new[] { ".csproj" }, _options.Include, _options.Exclude).ToList();
 
@@ -109,7 +109,7 @@ namespace MBW.Tools.ElephantProject.Commands.Rewrite
                 project.Save();
             }
 
-            return 0;
+            return Task.FromResult(0);
         }
     }
 }
