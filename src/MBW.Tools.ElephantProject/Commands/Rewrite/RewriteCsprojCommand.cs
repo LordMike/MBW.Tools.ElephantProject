@@ -10,12 +10,12 @@ using Serilog;
 
 namespace MBW.Tools.ElephantProject.Commands.Rewrite
 {
-    class RewiteCsprojCommand : CommandBase
+    class RewriteCsprojCommand : CommandBase
     {
-        private readonly RewiteCsprojCommandOptions _options;
+        private readonly RewriteCsprojCommandOptions _options;
         private readonly ProjectStore _projectStore;
 
-        public RewiteCsprojCommand(RewiteCsprojCommandOptions options, ProjectStore projectStore)
+        public RewriteCsprojCommand(RewriteCsprojCommandOptions options, ProjectStore projectStore)
         {
             _options = options;
             _projectStore = projectStore;

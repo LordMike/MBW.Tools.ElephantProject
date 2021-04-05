@@ -26,7 +26,7 @@ namespace MBW.Tools.ElephantProject
             RootCommand rootCommand = new RootCommand();
             rootCommand.AddGlobalOption(new Option(new[] { "-v", "--verbose" }, "Enable verbosity"));
 
-            AddCommand<RewiteCsprojCommandOptions>(rootCommand, RewiteCsprojCommandOptions.GetCommand());
+            AddCommand<RewriteCsprojCommandOptions>(rootCommand, RewriteCsprojCommandOptions.GetCommand());
             AddCommand<UndoRewiteCsprojCommandOptions>(rootCommand, UndoRewiteCsprojCommandOptions.GetCommand());
             AddCommand<UpdateSolutionCommandOptions>(rootCommand, UpdateSolutionCommandOptions.GetCommand());
 

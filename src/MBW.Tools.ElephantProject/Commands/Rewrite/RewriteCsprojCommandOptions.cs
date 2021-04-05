@@ -6,8 +6,8 @@ using MBW.Tools.ElephantProject.Attributes;
 
 namespace MBW.Tools.ElephantProject.Commands.Rewrite
 {
-    [TargetCommand(typeof(RewiteCsprojCommand))]
-    class RewiteCsprojCommandOptions : CommandOptionsBase
+    [TargetCommand(typeof(RewriteCsprojCommand))]
+    class RewriteCsprojCommandOptions : CommandOptionsBase
     {
         public DirectoryInfo RootDir { get; set; } = new(Directory.GetCurrentDirectory());
         public IList<string> Include { get; set; } = new List<string> { "**" };
