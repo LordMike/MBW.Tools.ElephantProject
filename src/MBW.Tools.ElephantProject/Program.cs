@@ -30,9 +30,7 @@ namespace MBW.Tools.ElephantProject
             AddCommand<UndoRewiteCsprojCommandOptions>(rootCommand, UndoRewiteCsprojCommandOptions.GetCommand());
             AddCommand<UpdateSolutionCommandOptions>(rootCommand, UpdateSolutionCommandOptions.GetCommand());
 
-            await rootCommand.InvokeAsync(args);
-
-            return 0;
+            return await rootCommand.InvokeAsync(args);
         }
 
         private static void AddCommand<TModel>(RootCommand rootCommand, Command newCommand) where TModel : CommandOptionsBase

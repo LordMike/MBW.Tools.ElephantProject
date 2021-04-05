@@ -4,8 +4,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Serilog;
-using Process = System.Diagnostics.Process;
-using ProcessStartInfo = System.Diagnostics.ProcessStartInfo;
 
 namespace MBW.Tools.ElephantProject.Helpers
 {

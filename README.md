@@ -11,6 +11,18 @@ The tool works in two parts:
 
 Run `dotnet tool install -g MBW.Tools.ElephantProject`. After this, `elephant-project` should be in your PATH.
 
-## Usage
+Run `elephant-project --help` to get further details.
 
-TODO
+## Usage: Create combined solution file
+
+> elephant-project sln -d C:\Root\Directory\ Full.sln
+
+This command creates or modifies a solution file to contain the projects within the directory specified. You can further tweak the projects included using the globbing patterns for `--include` and `--exclude`. This could be to exclude certain projects, like test projects, or to only include some set of projects within the root directory.
+
+Dependent projects are _always_ included in the resulting solution file - even if they are outside the root directory.
+
+## Usage: Rewrite project files
+
+> elephant-project rewrite -d C:\Root\Directory\
+
+This command replaces `PackageReferences` in `csproj` files with `ProjectReferences`. The goal here is to enable compilation, linking and debugging between two (or more) distinct repositories that usually share code through nuget packages. 
