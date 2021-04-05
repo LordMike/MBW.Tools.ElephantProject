@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Serilog;
 
@@ -47,31 +48,61 @@ namespace MBW.Tools.ElephantProject.Helpers
             yield return arguments.ToArray();
         }
 
-        public static async Task<int> Execute(string command, string workingDirectory, string[] arguments)
+        public static async Task<(int exitCode, IList<string> stdOut, IList<string> stdErr)> Execute(string command, string workingDirectory, string[] arguments)
         {
             Log.Debug("Executing {Command} @ {WorkingDirectory} with args {Arguments}", command, workingDirectory, arguments);
 
-            ProcessStartInfo procInfo = new ProcessStartInfo("dotnet")
-            {
-                WorkingDirectory = workingDirectory,
-                CreateNoWindow = true
-            };
+            Process proc = new Process();
+
+            proc.StartInfo.FileName = "dotnet";
+            proc.StartInfo.WorkingDirectory = workingDirectory;
+            proc.StartInfo.CreateNoWindow = true;
+            proc.StartInfo.RedirectStandardOutput = true;
+            proc.StartInfo.RedirectStandardError = true;
+            proc.EnableRaisingEvents = true;
 
             foreach (string arg in arguments)
-                procInfo.ArgumentList.Add(arg);
+                proc.StartInfo.ArgumentList.Add(arg);
+
+            ManualResetEvent evntOut = new ManualResetEvent(false);
+            ManualResetEvent evntErr = new ManualResetEvent(false);
+
+            List<string> stdOut = new List<string>();
+            List<string> stdErr = new List<string>();
+
+            proc.OutputDataReceived += (_, args) =>
+            {
+                if (args.Data == null)
+                    evntOut.Set();
+                else
+                    stdOut.Add(args.Data);
+            };
+            proc.ErrorDataReceived += (_, args) =>
+            {
+                if (args.Data == null)
+                    evntErr.Set();
+                else
+                    stdErr.Add(args.Data);
+            };
 
             Stopwatch sw = Stopwatch.StartNew();
 
-            Process proc = Process.Start(procInfo);
+            proc.Start();
+
+            proc.BeginOutputReadLine();
+            proc.BeginErrorReadLine();
+
             Log.Debug("Started process id {Pid}", proc.Id);
 
             await proc.WaitForExitAsync();
 
+            evntOut.WaitOne();
+            evntErr.WaitOne();
             sw.Stop();
 
             Log.Debug("Pid {Pid} exited with exit code {ExitCode}, ran for {Runtime}", proc.Id, proc.ExitCode, sw.Elapsed);
 
-            return proc.ExitCode;
+            return (proc.ExitCode, stdOut, stdErr);
         }
     }
 }

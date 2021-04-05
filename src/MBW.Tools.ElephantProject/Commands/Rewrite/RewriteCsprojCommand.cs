@@ -37,10 +37,8 @@ namespace MBW.Tools.ElephantProject.Commands.Rewrite
 
         private Dictionary<string, FileInfo> GetProjectsLookup(List<FileInfo> matchedProjects)
         {
-            HashSet<string> uniqueProjects = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             List<(FileInfo file, string assemblyName)> lookupProjects = matchedProjects
-                .Concat(matchedProjects.SelectMany(projectFile => ProjectUtility.GetProjectDependencies(_projectStore, projectFile)))
-                .Where(s => uniqueProjects.Add(s.FullName))
+                .Concat(matchedProjects.SelectMany(projectFile => ProjectUtility.GetProjectDependencies(_projectStore, projectFile))).Distinct(FileInfoComparer.Instance)
                 .Select(s => (file: s, assemblyName: GetAssemblyName(s)))
                 .ToList();
 
@@ -58,7 +56,7 @@ namespace MBW.Tools.ElephantProject.Commands.Rewrite
                 if (lookup.TryAdd(assemblyName, file))
                     continue;
 
-                duplicateAssemblyNames.Add(assemblyName, new List<FileInfo> { file, lookup[assemblyName] });
+                duplicateAssemblyNames.Add(assemblyName, new List<FileInfo> { lookup[assemblyName], file });
                 lookup.Remove(assemblyName);
             }
 
@@ -97,11 +95,10 @@ namespace MBW.Tools.ElephantProject.Commands.Rewrite
                     ProjectItemElement removePackage = project.Xml.CreateItemElement("PackageReference");
                     removePackage.Remove = packageName;
 
-                    itemGroup.AppendChild(removePackage);
-
                     ProjectItemElement includeReference = project.Xml.CreateItemElement("ProjectReference");
                     includeReference.Include = lookup[packageName].FullName;
-
+                    
+                    itemGroup.AppendChild(removePackage);
                     itemGroup.AppendChild(includeReference);
                 }
 

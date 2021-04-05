@@ -2,10 +2,8 @@
   "profiles": {
     "MBW.Tools.ElephantProject": {
       "commandName": "Project",
-      //"commandLineArgs": "sln -v C:\\Users\\MichaelBisbjerg\\Work\\Elephant-Auth-WithTests.sln -x _Builder --file-types *.csproj -i C:\\Users\\MichaelBisbjerg\\Work\\Chronos",
-      //"commandLineArgs": "rewrite -d C:\\Users\\MichaelBisbjerg\\Work -i Chronos*/** -p Chronos-SDK/**:Chronos.SDK -p Chronos-Shared/**:Chronos.Shared",
-      "commandLineArgs": "rewrite -d C:\\Users\\MichaelBisbjerg\\Work -i Chronos*/**"
-      //"commandLineArgs": "undo-rewrite -d C:\\Users\\MichaelBisbjerg\\Work -i Chronos*/**"
+      "commandLineArgs": "sln Full.sln",
+      "workingDirectory": "C:\\Users\\MichaelBisbjerg\\Work"
     }
   }
 }
