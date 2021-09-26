@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using MBW.Tools.ElephantProject.Helpers;
-using Microsoft.Build.Construction;
 using Microsoft.Build.Evaluation;
 using Serilog;
 
@@ -72,38 +71,30 @@ namespace MBW.Tools.ElephantProject.Commands.Rewrite
 
             Dictionary<string, FileInfo> lookup = GetProjectsLookup(matchedProjects);
 
-            foreach (FileInfo projectFile in matchedProjects)
+            ReplacementTask replacementTask = new ReplacementTask
             {
-                Project project = _projectStore.Load(projectFile);
+                ProjectStore = _projectStore,
+                TargetProjects = matchedProjects,
+                Replacement = lookup,
+                RootDirectory = _options.RootDir
+            };
 
-                List<string> toReplace = project.GetItems("PackageReference")
-                    .Select(s => s.EvaluatedInclude)
-                    .Where(s => lookup.ContainsKey(s))
-                    .ToList();
-
-                if (!toReplace.Any())
-                {
-                    Log.Debug("Skipping {File}, nothing to do", projectFile.FullName);
-                    continue;
-                }
-
-                ProjectItemGroupElement itemGroup = project.Xml.AddItemGroup();
-                itemGroup.Label = "Elephant Project";
-
-                foreach (string packageName in toReplace)
-                {
-                    ProjectItemElement removePackage = project.Xml.CreateItemElement("PackageReference");
-                    removePackage.Remove = packageName;
-
-                    ProjectItemElement includeReference = project.Xml.CreateItemElement("ProjectReference");
-                    includeReference.Include = lookup[packageName].FullName;
-                    
-                    itemGroup.AppendChild(removePackage);
-                    itemGroup.AppendChild(includeReference);
-                }
-
-                Log.Information("Altered {File}, replaced {Count:N0} packages with projects", Path.GetRelativePath(_options.RootDir.FullName, projectFile.FullName), toReplace.Count);
-                project.Save();
+            switch (_options.Strategy)
+            {
+                case RewriteCsprojStrategy.ItemGroup:
+                    {
+                        RewriteItemGroupStrategy strategy = new RewriteItemGroupStrategy();
+                        strategy.Perform(replacementTask);
+                        break;
+                    }
+                case RewriteCsprojStrategy.BuildProps:
+                    {
+                        DirectoryBuildPropsStrategy strategy = new DirectoryBuildPropsStrategy();
+                        strategy.Perform(replacementTask);
+                        break;
+                    }
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
             return Task.FromResult(0);

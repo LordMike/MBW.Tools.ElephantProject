@@ -12,6 +12,7 @@ namespace MBW.Tools.ElephantProject.Commands.Rewrite
         public DirectoryInfo RootDir { get; set; } = new(Directory.GetCurrentDirectory());
         public IList<string> Include { get; set; } = new List<string> { "**" };
         public IList<string> Exclude { get; set; } = Array.Empty<string>();
+        public RewriteCsprojStrategy Strategy { get; set; } = RewriteCsprojStrategy.ItemGroup;
 
         public static Command GetCommand()
         {
@@ -41,6 +42,15 @@ namespace MBW.Tools.ElephantProject.Commands.Rewrite
                     Arity = ArgumentArity.OneOrMore
                 },
                 Description = "Exclude all projects matching these glob patterns, can be specified multiple times"
+            });
+
+            cmd.AddOption(new Option(new[] { "-s", "--strategy" })
+            {
+                Argument = new Argument
+                {
+                    Arity = ArgumentArity.ZeroOrOne
+                },
+                Description = "Rewriting strategy. '" + nameof(RewriteCsprojStrategy.ItemGroup) + "' adds an ItemGroup to each csproj file, with changes. '" + nameof(RewriteCsprojStrategy.BuildProps) + "' constructs or changes a Directory.Build.props in the root directory."
             });
 
             return cmd;
