@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Xml;
 using Microsoft.Build.Construction;
 using Microsoft.Build.Evaluation;
 using Serilog;
@@ -47,8 +46,12 @@ namespace MBW.Tools.ElephantProject.Commands.Rewrite
                     buildPropsFile.Refresh();
                 }
 
+                // Idea: https://github.com/dotnet/sdk/issues/1151#issuecomment-356136396
+                // Item functions: https://docs.microsoft.com/en-us/visualstudio/msbuild/item-functions?view=vs-2019
+                // 
+
                 /* Example file:
-                 *   <Target Name="Replace" BeforeTargets="CollectPackageReferences">
+                 *   <Target Name="ElephantProject" BeforeTargets="CollectPackageReferences">
                        <ItemGroup>
                          <!-- Map all projects to package names, when resolved, only those with corresponding PackageReference's are included -->
                          <ElephantProject Include="@(PackageReference->WithMetadataValue('Identity',    'MBW.Client.BlueRiiotAPI'))">
