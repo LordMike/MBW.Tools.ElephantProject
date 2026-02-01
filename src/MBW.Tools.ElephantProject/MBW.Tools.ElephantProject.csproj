@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <OutputType>Exe</OutputType>
+    <TargetFramework>$(DefaultTargetFramework)</TargetFramework>
+        <OutputType>Exe</OutputType>
     <Description>.NET global tool to create and maintain solution files spanning multiple repositories.</Description>
   </PropertyGroup>
 
