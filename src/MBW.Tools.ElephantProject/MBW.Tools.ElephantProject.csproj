@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <IsPackable>true</IsPackable>
     <TargetFramework>$(DefaultTargetFramework)</TargetFramework>
         <OutputType>Exe</OutputType>
     <Description>.NET global tool to create and maintain solution files spanning multiple repositories.</Description>
